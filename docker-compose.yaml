@@ -18,7 +18,7 @@ services:
         volumes:
           - ./conf/:/etc/fluent-bit/:ro
           - /opt:/opt:ro
-          - ./fluent-bit:/var/log/fluent-bit
+          - ./data:/var/log/fluent-bit
         networks:
           - local
 
