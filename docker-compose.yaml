@@ -1,0 +1,27 @@
+services:
+    fluent-bit:
+        image: fluent/fluent-bit:4.0
+        container_name: fluent-bit
+        mem_limit: 1g
+        cpus: 1
+        restart: unless-stopped
+        command:
+          - /fluent-bit/bin/fluent-bit
+          - --config=/etc/fluent-bit/fluent-bit.conf
+        environment:
+          - FLB_ES_HOST=esjh.luckydice.site
+          - FLB_ES_PORT=443
+          - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+        ports:
+          #- 2020:2020
+          - 24224:24224
+        volumes:
+          - ./conf/:/etc/fluent-bit/:ro
+          - /opt:/opt:ro
+          - ./fluent-bit:/var/log/fluent-bit
+        networks:
+          - local
+
+networks:
+  local:
+    driver: bridge
